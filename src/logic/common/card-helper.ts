@@ -1,4 +1,4 @@
-import { ICard, ICardFace, ICardImages } from '../../models';
+import { ICard, /* ICardFace, */ ICardImages } from '../../models';
 
 /**
  * Creates a formatted message describing the given card and returns it
@@ -15,15 +15,15 @@ function generateDescriptionText(card: ICard) {
 
     const description = [];
     if (!card.card_faces) {
-        let cardCost = card.mana_cost
+        /* let cardCost = card.mana_cost
             ? card.mana_cost.replace(new RegExp('[{}]', 'g'), '')
-            : '';
-        let nameLine = `**${card.name}**`;
+            : '';*/
+        /* let nameLine = `**${card.name}**`;
         if (cardCost) {
             nameLine += ` - ${cardCost}`;
         }
-        description.push(nameLine);
-
+        description.push(nameLine);*/
+/*
         if (card.printed_type_line || card.type_line) {
             // bold type line
             let type = `${card.printed_type_line || card.type_line}`;
@@ -55,18 +55,18 @@ function generateDescriptionText(card: ICard) {
             // bold P/T
             description.push(powerToughnessToString(card));
         }
-
+*/
         if (card.image_uris) {
             description.push(getImageUrl(card.image_uris));
         }
     } else {
         // split cards are special
-        let nameLine = `**${card.name}**`;
-        nameLine += ` _(2-faced card)_`;
-        description.push(nameLine);
+        // let nameLine = `**${card.name}**`;
+        // nameLine += ` _(2-faced card)_`;
+        // description.push(nameLine);
 
         card.card_faces.forEach((face) => {
-            let faceCost = face.mana_cost
+            /* let faceCost = face.mana_cost
                 ? face.mana_cost.replace(new RegExp('[{}]', 'g'), '')
                 : '';
             let nameLine = `**${face.name}**`;
@@ -90,7 +90,7 @@ function generateDescriptionText(card: ICard) {
             }
             if (face.power) {
                 description.push(powerToughnessToString(face));
-            }
+            } */
             if (face.image_uris) {
                 description.push(getImageUrl(face.image_uris));
             }
@@ -106,7 +106,7 @@ function generateDescriptionText(card: ICard) {
  * Prioritizes formats as follows: normal > large > small > png
  */
 function getImageUrl(imageUris: ICardImages) {
-    if (imageUris.normal) {
+     if (imageUris.normal) {
         return imageUris.normal;
     } else if (imageUris.large) {
         return imageUris.large;
@@ -118,21 +118,21 @@ function getImageUrl(imageUris: ICardImages) {
     return '';
 }
 
-function powerToughnessToString(object: ICard | ICardFace): string {
-    if (!object.power || !object.toughness) {
-        return '';
-    }
+// function powerToughnessToString(object: ICard | ICardFace): string {
+//     if (!object.power || !object.toughness) {
+//         return '';
+//     }
 
-    let powerString = escape(object.power).replace(/\*/g, '\\*');
-    let toughnessString = escape(object.toughness).replace(/\*/g, '\\*');
+//     let powerString = escape(object.power).replace(/\*/g, '\\*');
+//     let toughnessString = escape(object.toughness).replace(/\*/g, '\\*');
 
-    return `**${powerString}/${toughnessString}**`;
-}
+//     return `**${powerString}/${toughnessString}**`;
+// }
 
-function capitalize(content: string): string {
-    if (!content) {
-        return '';
-    }
+// function capitalize(content: string): string {
+//     if (!content) {
+//         return '';
+//     }
 
-    return content[0].toUpperCase() + content.substring(1).toLowerCase();
-}
+//     return content[0].toUpperCase() + content.substring(1).toLowerCase();
+// }
